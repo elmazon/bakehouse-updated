@@ -6,8 +6,8 @@ pipeline{
     stages{
         stage('SCM'){
             steps{
-                sh "git checkout "
-                //checkout scm
+                sh "git checkout ${params.BRANCH}"
+                checkout scm
             }
         }        
         stage('docker build'){
