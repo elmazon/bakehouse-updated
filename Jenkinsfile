@@ -6,8 +6,9 @@ pipeline{
     stages{
         stage('SCM'){
             steps{
-                sh "git fetch"                
-                sh "git checkout ${params.BRANCH}"
+                sh "git fetch"  
+                sh "git checkout -t -b develop origin/release"              
+                //sh "git checkout ${params.BRANCH}"
                 checkout scm
             }
         }        
