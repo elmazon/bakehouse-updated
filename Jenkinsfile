@@ -17,7 +17,7 @@ pipeline{
                 checkout scm
                 script{
                     if (params.BRANCH == 'release'){
-                        withCredentials(sernameColonPassword([credentialsId: 'docker-password', variable: 'docker-pass')]) {
+                        withCredentials(sernameColonPassword([credentialsId: 'docker-password', variable: 'docker-pass'])) {
                             sh "docker login -u ahmedelmazon -p ${docker-pass}"
                         }
                         sh "docker build . -t ahmedelmazon/bakehouse"
