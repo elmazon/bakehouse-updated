@@ -4,6 +4,12 @@ pipeline{
         choice(name: 'BRANCH', choices: ['dev', 'test', 'release', 'prod'])
     } 
     stages{
+        stage('SCM'){
+            steps{
+                sh "git checkout ${params.BRANCH}"
+                checkout scm
+            }
+        }        
         stage('docker build'){
             steps{
                 checkout scm
