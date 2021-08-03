@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage('docker build'){
             steps{
-                cleanWs()
+                //cleanWs()
                 sh "git fetch --all"
                 //checkout scm
                 sh "git checkout release"
