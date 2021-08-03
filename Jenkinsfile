@@ -8,11 +8,11 @@ pipeline{
             steps{
                 checkout scm
                 sh "git checkout release"
-                sh "docker build . -t ahmedelmazon/bakehouse"
-                withCredentials([usernameColonPassword(credentialsId: 'docker-pass', variable: 'docker-password')]) {
-                    sh "docker login -u ahmedelmazon -p ${docker-password}"
-                }
-            }
+                //sh "docker build . -t ahmedelmazon/bakehouse"
+                //withCredentials([usernameColonPassword(credentialsId: 'docker-pass', variable: 'docker-password')]) {
+                  //  sh "docker login -u ahmedelmazon -p ${docker-password}"
+               // }
+            //}
         }
         stage('dockerhub push'){
             steps{
