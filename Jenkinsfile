@@ -5,11 +5,9 @@ pipeline{
     } 
     stages{
         stage('docker build'){
-            steps{
-                sh "git remote update"
-                sh "git fetch" 
+            steps
                 checkout scm
-                sh "git checkout ${params.BRANCH}"
+                sh "git checkout release"
                 sh "docker build . -t ahmedelmazon/bakehouse"
                 withCredentials([usernameColonPassword(credentialsId: 'docker-pass', variable: 'docker-password')]) {
                     sh "docker login -u ahmedelmazon -p ${docker-password}"  
