@@ -12,12 +12,14 @@ pipeline{
                 sh "checkout scm ${params.BRANCH}"
                 sh "docker build . -t ahmedelmazon/bakehouse"
             }
-        }
             withCredentials([usernameColonPassword(credentialsId: 'docker-pass', variable: 'docker-password')]) {
             steps{
                 sh "docker login -u ahmedelmazon -p ${docker-pass}"  
             }
-            }   
+            }
+        }
+    }
+
         stage('dockerhub push'){
             steps{
                 sh "docker push  ahmedelmazon/bakehouse"
