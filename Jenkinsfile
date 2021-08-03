@@ -7,7 +7,7 @@ pipeline{
         stage('docker build'){
             steps{
                 //cleanWs()
-                sh "git fetch --all"
+                //sh "git fetch --all"
                 //checkout scm
                 sh "git checkout release"
                 sh "docker build . -t ahmedelmazon/bakehouse"
