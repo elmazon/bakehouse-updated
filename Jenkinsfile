@@ -7,7 +7,7 @@ pipeline{
         stage('SCM'){
             steps{
                 sh "git checkout "
-                checkout scm
+                //checkout scm
             }
         }        
         stage('docker build'){
