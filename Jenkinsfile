@@ -23,20 +23,20 @@ pipeline{
         }
         stage('deployment'){
             steps {
-            if (params.BRANCH == 'dev'){
-                sh "kubectl create -f deployment.yaml"
-                sh "kubectl create -f service.yaml"
-                sh "checkout scm ${params.BRANCH}"
-            }
-            else if (params.BRANCH == 'test'){
-                sh "kubectl create -f deployment.yaml"
-                sh "kubectl create -f service.yaml"
-                sh "checkout scm ${params.BRANCH}"
-            }
-            else (params.BRANCH == 'prod'){
-                sh "kubectl create -f deployment.yaml"
-                sh "kubectl create -f service.yaml"
-                sh "checkout scm ${params.BRANCH}"
+                if (params.BRANCH == 'dev'){
+                    sh "kubectl create -f deployment.yaml"
+                    sh "kubectl create -f service.yaml"
+                    sh "checkout scm ${params.BRANCH}"
+                }
+                else if (params.BRANCH == 'test'){
+                    sh "kubectl create -f deployment.yaml"
+                    sh "kubectl create -f service.yaml"
+                    sh "checkout scm ${params.BRANCH}"
+                }
+                else (params.BRANCH == 'prod'){
+                    sh "kubectl create -f deployment.yaml"
+                    sh "kubectl create -f service.yaml"
+                    sh "checkout scm ${params.BRANCH}"
             }                        
             }
         }
