@@ -5,9 +5,6 @@ pipeline{
     } 
     stages{
         stage('docker build'){
-            when {
-            branch comparator: 'EQUALS', pattern: 'release'
-            }
             steps{
                 sh "checkout scm ${params.BRANCH}"
                 sh "docker build . -t ahmedelmazon/bakehouse"
