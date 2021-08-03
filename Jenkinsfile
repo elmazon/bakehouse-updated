@@ -18,8 +18,6 @@ pipeline{
             }
             }
         }
-    }
-
         stage('dockerhub push'){
             steps{
                 sh "docker push  ahmedelmazon/bakehouse"
