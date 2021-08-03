@@ -6,7 +6,8 @@ pipeline{
     stages{
         stage('docker build'){
             steps{
-                sh "git fetch --all "
+                sh "git remote update"
+                sh "git fetch" 
                 checkout scm
                 sh "git checkout ${params.BRANCH}"
                 sh "docker build . -t ahmedelmazon/bakehouse"
