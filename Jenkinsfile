@@ -9,6 +9,9 @@ pipeline{
                 //cleanWs()
                 //sh "git fetch --all"
                 //checkout scm
+                sh "git remote update"
+                sh "git fetch" 
+                sh "git checkout --track origin/release"
                 sh "git checkout release"
                 sh "docker build . -t ahmedelmazon/bakehouse"
                 withCredentials([usernameColonPassword(credentialsId: 'docker-pass', variable: 'docker-password')]) {
