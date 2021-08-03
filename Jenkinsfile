@@ -7,16 +7,23 @@ pipeline{
         stage('docker build'){
             steps{
                 checkout scm
-                sh "git checkout release"
-                //sh "docker build . -t ahmedelmazon/bakehouse"
-                //withCredentials([usernameColonPassword(credentialsId: 'docker-pass', variable: 'docker-password')]) {
-                  //  sh "docker login -u ahmedelmazon -p ${docker-password}"
-               // }
-            //}
+                script{
+                    if (params.BRANCH == 'release'){
+                        sh "docker build . -t ahmedelmazon/bakehouse"
+                        withCredentials([usernameColonPassword(credentialsId: 'docker-pass', variable: 'docker-password')]) {
+                            sh "docker login -u ahmedelmazon -p ${docker-password}"
+                        }
+                    }
+                }
+            }
         }
         stage('dockerhub push'){
             steps{
-                sh "docker push  ahmedelmazon/bakehouse"
+                script{
+                    if (params.BRANCH == 'release'){
+                        sh "docker push  ahmedelmazon/bakehouse"
+                    }
+                }
             }
         }
         stage('deployment'){
