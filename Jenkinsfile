@@ -7,7 +7,7 @@ pipeline{
         stage('docker build'){
             steps{
                 checkout scm
-                sh "git checkout origin ${params.BRANCH}"
+                sh "git checkout origin/${params.BRANCH}"
                 sh "docker build . -t ahmedelmazon/bakehouse"
                 withCredentials([usernameColonPassword(credentialsId: 'docker-pass', variable: 'docker-password')]) {
                     sh "docker login -u ahmedelmazon -p ${docker-pass}"  
