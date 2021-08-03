@@ -17,10 +17,10 @@ pipeline{
                 checkout scm
                 script{
                     if (params.BRANCH == 'release'){
-                        sh "docker build . -t ahmedelmazon/bakehouse"
                         withCredentials([usernameColonPassword(credentialsId: 'docker-pass', variable: 'docker-password')]) {
                             sh "docker login -u ahmedelmazon -p ${docker-password}"
                         }
+                        sh "docker build . -t ahmedelmazon/bakehouse"
                     }
                 }
             }
