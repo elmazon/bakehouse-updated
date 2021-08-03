@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+---  
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: dev
+  name: bakehouse
+  labels:
+    app: bakehouse
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bakehouse
+  template:
+    metadata:
+      labels:
+        app: bakehouse
+    spec:
+      containers:
+      - name: bakehouse
+        image: ahmedelmazon/bakehouse
+        ports:
+        - containerPort: 80
