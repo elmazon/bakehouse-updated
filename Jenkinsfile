@@ -7,7 +7,8 @@ pipeline{
         stage('docker build'){
             steps{
                 cleanWs()
-                checkout scm
+                sh "git fetch --all"
+                //checkout scm
                 sh "git checkout release"
                 sh "docker build . -t ahmedelmazon/bakehouse"
                 withCredentials([usernameColonPassword(credentialsId: 'docker-pass', variable: 'docker-password')]) {
