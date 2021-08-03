@@ -3,6 +3,7 @@ pipeline{
     stages{
         stage('pull image'){
             steps{
+                sh "docker login -u ${password} -p ${password}"
                 sh "docker pull  ahmedelmazon/bakehouse"
             }
         }
