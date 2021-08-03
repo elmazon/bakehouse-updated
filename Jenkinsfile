@@ -6,6 +6,7 @@ pipeline{
     stages{
         stage('docker build'){
             steps{
+                cleanWs()
                 checkout scm
                 sh "git checkout release"
                 sh "docker build . -t ahmedelmazon/bakehouse"
