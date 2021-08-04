@@ -20,9 +20,9 @@ pipeline{
                 sh "git checkout ${params.BRANCH}" 
                 script{
                     if (params.BRANCH == 'release'){
+                        sh "docker build . -t ahmedelmazon/bakehouse"
                         withCredentials(usernameColonPassword([credentialsId: 'docker-password', variable: 'docker-pass'])) {
-                            sh "docker login -u ahmedelmazon -p ${docker-pass}"
-                            sh "docker build . -t ahmedelmazon/bakehouse"
+                            sh "docker login -u ahmedelmazon -p ${docker-pass}"       
                         }
                         
                     }
