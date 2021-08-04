@@ -17,7 +17,7 @@ pipeline{
         stage('docker build'){
             steps{
                 checkout scm
-                sh "git checkout ${params.BRANCH}" 
+                sh "git checkout -b ${params.BRANCH}" 
                 script{
                     if (params.BRANCH == 'release'){
                         sh "docker build . -t ahmedelmazon/bakehouse"
