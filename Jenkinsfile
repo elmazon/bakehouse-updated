@@ -8,7 +8,7 @@ pipeline{
             steps {
                  script {
                     withCredentials([usernamePassword(credentialsId: 'docker_password', passwordVariable: 'password', usernameVariable: 'user')]) {
-                        sh 'docker login -u ${user} -p ${password}'
+                        sh 'docker login -u ahmedelmazon -p ${password}'
                     }           
                     if  (params.BRANCH == 'release') 
                             {
@@ -16,7 +16,7 @@ pipeline{
                                 sh 'docker build . -t ahmedelmazon/bakehouse'
                                 sh 'docker push ahmedelmazon/bakehouse'
                             
-                             }
+                            }
                      else if  (params.BRANCH == 'prod') 
                             {
                                 sh "git checkout ${params.BRANCH}"
