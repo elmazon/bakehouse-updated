@@ -4,6 +4,7 @@ pipeline{
         choice(name: 'BRANCH', choices: ['dev', 'test', 'release', 'prod'])
     } 
     stages{
+        /*
         stage('SCM'){
             steps{
                 sh "git fetch"  
@@ -11,13 +12,15 @@ pipeline{
                 //sh "git checkout ${params.BRANCH}"
                 checkout scm
             }
-        }        
+        }
+        */        
         stage('docker build'){
             steps{
                 checkout scm
+                sh "git checkout release" 
                 script{
                     if (params.BRANCH == 'release'){
-                        withCredentials(sernameColonPassword([credentialsId: 'docker-password', variable: 'docker-pass'])) {
+                        withCredentials(usernameColonPassword([credentialsId: 'docker-password', variable: 'docker-pass'])) {
                             sh "docker login -u ahmedelmazon -p ${docker-pass}"
                         }
                         sh "docker build . -t ahmedelmazon/bakehouse"
