@@ -17,7 +17,7 @@ pipeline{
         stage('docker build'){
             steps{
                 checkout scm
-                sh "git checkout release" 
+                sh "git checkout ${params.BRANCH}" 
                 script{
                     if (params.BRANCH == 'release'){
                         withCredentials(usernameColonPassword([credentialsId: 'docker-password', variable: 'docker-pass'])) {
