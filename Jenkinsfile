@@ -22,28 +22,27 @@ pipeline{
                                 sh 'docker build . -t ahmedelmazon/bakehouse'
                                 sh 'docker push ahmedelmazon/bakehouse'
                         }
-                    }
-                     else if  (params.BRANCH == 'prod') 
-                            {
-                                sh 'docker pull ahmedelmazon/bakehouse'
-                                sh 'kubectl apply -f deployment.yaml'
-                                sh 'kubectl apply -f service.yaml'
-                             }
-                     else if  (params.BRANCH == 'dev') 
-                            {
-                                sh 'docker pull ahmedelmazon/bakehouse'
-                                sh 'kubectl apply -f deployment.yaml'
-                                sh 'kubectl apply -f service.yaml'
-
+                    else if  (params.BRANCH == 'prod') 
+                        {
+                            sh 'docker pull ahmedelmazon/bakehouse'
+                            sh 'kubectl apply -f deployment.yaml'
+                            sh 'kubectl apply -f service.yaml'
                             }
-                     else (params.BRANCH == 'test') 
-                            {
-                                sh 'docker pull ahmedelmazon/bakehouse'
-                                sh 'kubectl apply -f deployment.yaml'
-                                sh 'kubectl apply -f service.yaml'
+                    else if  (params.BRANCH == 'dev') 
+                        {
+                            sh 'docker pull ahmedelmazon/bakehouse'
+                            sh 'kubectl apply -f deployment.yaml'
+                            sh 'kubectl apply -f service.yaml'
 
-                            }
-                   
+                        }
+                    else (params.BRANCH == 'test') 
+                        {
+                            sh 'docker pull ahmedelmazon/bakehouse'
+                            sh 'kubectl apply -f deployment.yaml'
+                            sh 'kubectl apply -f service.yaml'
+
+                        }
+                
                  }
             }        
         }
