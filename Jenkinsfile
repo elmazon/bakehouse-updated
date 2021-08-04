@@ -12,9 +12,9 @@ pipeline{
         }     
         stage('docker build'){
             steps{
-                checkout scm
-                sh "git checkout ${params.BRANCH}" 
+                checkout scm 
                 script{
+                    sh "git checkout ${params.BRANCH}"
                     if (params.BRANCH == 'release'){
                         sh "docker build . -t ahmedelmazon/bakehouse"
                         withCredentials(usernameColonPassword([credentialsId: 'docker-password', variable: 'docker-pass'])) {
