@@ -6,13 +6,15 @@ pipeline{
     stages{
         stage('new_stage') {
             steps {
+                 sh 'git checkout ${params.BRANCH}'
                  script {
+                    
                     withCredentials([usernamePassword(credentialsId: 'docker_password', passwordVariable: 'password', usernameVariable: 'user')]) {
                         sh 'docker login -u ahmedelmazon -p ${password}'
                     }           
                     if  (params.BRANCH == 'release') 
                             {
-                                sh "git checkout ${params.BRANCH}"
+                                
                                 sh 'docker build . -t ahmedelmazon/bakehouse'
                                 sh 'docker push ahmedelmazon/bakehouse'
                             
