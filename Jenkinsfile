@@ -1,19 +1,15 @@
 pipeline{
     agent any
     parameters {
-        choice(name: 'BRANCH', choices: ['dev', 'test', 'release', 'prod'])
+        choice(name: 'BRANCH', choices: ['release', 'dev', 'test', 'prod'])
     } 
     stages{
-        /*
         stage('SCM'){
-            steps{
-                sh "git fetch"  
-                sh "git checkout release"              
-                //sh "git checkout ${params.BRANCH}"
+            steps{             
+                sh "git checkout ${params.BRANCH}"
                 checkout scm
             }
-        }
-        */        
+        }     
         stage('docker build'){
             steps{
                 checkout scm
