@@ -4,27 +4,21 @@ pipeline{
         choice(name: 'BRANCH', choices: ['release', 'dev', 'test', 'prod'])
     } 
     stages{
-        stage('SCM'){
-            steps{             
-                sh "git checkout ${params.BRANCH}"
-                checkout scm
-            }
-        }     
         stage('docker build'){
-            steps{
-                checkout scm 
+            steps{ 
+                sh "git checkout ${params.BRANCH}"
                 script{
-                    sh "git checkout ${params.BRANCH}"
                     if (params.BRANCH == 'release'){
-                        sh "docker build . -t ahmedelmazon/bakehouse"
                         withCredentials(usernameColonPassword([credentialsId: 'docker-password', variable: 'docker-pass'])) {
                             sh "docker login -u ahmedelmazon -p ${docker-pass}"       
                         }
-                        
+                        sh "docker build . -t ahmedelmazon/bakehouse"
                     }
+
                 }
             }
         }
+        /*
         stage('dockerhub push'){
             steps{
                 script{
@@ -55,5 +49,6 @@ pipeline{
                 }
             }
         }
-    }
+*/
+   }
 }
