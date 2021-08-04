@@ -6,8 +6,9 @@ pipeline{
     stages{
         stage('SCM'){
             steps{
-                sh "git checkout ${params.BRANCH}"
-                checkout SCM
+                checkout([$class: 'GitSCM', branches: [[name: '*/release']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/elmazon/bakehouse']]])
+                //sh "git checkout ${params.BRANCH}"
+                //checkout SCM
             }
         }
         stage('new_stage') {
@@ -16,12 +17,12 @@ pipeline{
                     withCredentials([usernamePassword(credentialsId: 'docker_password', passwordVariable: 'password', usernameVariable: 'user')]) {
                         sh 'docker login -u ahmedelmazon -p ${password}'
                     }           
-                    if  (params.BRANCH == 'release') 
-                            {
+                    if  (params.BRANCH == 'release'){
+                                //checkout([$class: 'GitSCM', branches: [[name: '*/release']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/elmazon/bakehouse']]])
                                 sh 'docker build . -t ahmedelmazon/bakehouse'
                                 sh 'docker push ahmedelmazon/bakehouse'
-                            
-                            }
+                        }
+                    }
                      else if  (params.BRANCH == 'prod') 
                             {
                                 sh 'docker pull ahmedelmazon/bakehouse'
