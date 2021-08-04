@@ -7,9 +7,9 @@ pipeline{
         stage('new_stage') {
             steps {
                  script {
-                    withCredentials(usernamePassword([credentialsId: 'docker-password', variable: 'docker-pass'])) {
-                        sh 'docker login -u ahmedelmazon -p ${docker-pass}'       
-                    }
+                    withCredentials([usernamePassword(credentialsId: '', passwordVariable: 'password', usernameVariable: 'user')]) {
+                        sh 'docker login -u ${user} -p ${password}'
+                    }           
                     if  (params.BRANCH == 'release') 
                             {
                                 sh "git checkout ${params.BRANCH}"
