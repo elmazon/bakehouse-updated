@@ -7,6 +7,7 @@ pipeline{
         stage('SCM'){
             steps{
                 sh "git checkout ${params.BRANCH}"
+                checkout SCM
             }
         }
         stage('new_stage') {
