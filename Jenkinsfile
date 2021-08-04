@@ -8,7 +8,7 @@ pipeline{
             steps {
                  script {
                     withCredentials([usernamePassword(credentialsId: 'docker_password', passwordVariable: 'password', usernameVariable: 'user')]) {
-                        sh 'docker login -u {user} -p ${password}'
+                        sh 'docker login -u ${user} -p ${password}'
                     }           
                     if  (params.BRANCH == 'release') 
                             {
