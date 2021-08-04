@@ -4,51 +4,45 @@ pipeline{
         choice(name: 'BRANCH', choices: ['release', 'dev', 'test', 'prod'])
     } 
     stages{
-        stage('docker build'){
-            steps{ 
-                sh 'git checkout ${params.BRANCH}'
-                script{
-                    if (params.BRANCH == 'release'){
-                        withCredentials(usernameColonPassword([credentialsId: 'docker-password', variable: 'docker-pass'])) {
-                            sh 'docker login -u ahmedelmazon -p ${docker-pass}'       
-                        }
-                        sh 'docker build . -t ahmedelmazon/bakehouse'
-                    }
-
-                }
-            }
-        }
-        /*
-        stage('dockerhub push'){
-            steps{
-                script{
-                    if (params.BRANCH == 'release'){
-                        sh "docker push  ahmedelmazon/bakehouse"
-                    }
-                }
-            }
-        }
-        stage('deployment'){
+        stage('new_stage') {
             steps {
-                script{
-                    if (params.BRANCH == 'dev'){
-                        sh "kubectl create -f deployment.yaml"
-                        sh "kubectl create -f service.yaml"
-                        sh "checkout scm ${params.BRANCH}"
+                 script {
+                    withCredentials(usernameColonPassword([credentialsId: 'docker-password', variable: 'docker-pass'])) {
+                        sh 'docker login -u ahmedelmazon -p ${docker-pass}'       
                     }
-                    else if (params.BRANCH == 'test'){
-                        sh "kubectl create -f deployment.yaml"
-                        sh "kubectl create -f service.yaml"
-                        sh "checkout scm ${params.BRANCH}"
-                    }
-                    else (params.BRANCH == 'prod'){
-                        sh "kubectl create -f deployment.yaml"
-                        sh "kubectl create -f service.yaml"
-                        sh "checkout scm ${params.BRANCH}"
-                    }                        
-                }
-            }
+                    if  (params.BRANCH == 'release') 
+                            {
+                                sh "git checkout ${params.BRANCH}"
+                                sh 'docker build . -t ahmedelmazon/bakehouse'
+                                sh 'docker push ahmedelmazon/bakehouse'
+                            
+                             }
+                     else if  (params.BRANCH == 'prod') 
+                            {
+                                sh "git checkout ${params.BRANCH}"
+                                sh 'docker pull ahmedelmazon/bakehouse'
+                                sh 'kubectl apply -f deployment.yaml'
+                                sh 'kubectl apply -f service.yaml'
+                             }
+                     else if  (params.BRANCH == 'dev') 
+                            {
+                                sh "git checkout ${params.BRANCH}"
+                                sh 'docker pull ahmedelmazon/bakehouse'
+                                sh 'kubectl apply -f deployment.yaml'
+                                sh 'kubectl apply -f service.yaml'
+
+                            }
+                     else (params.BRANCH == 'test') 
+                            {
+                                sh "git checkout ${params.BRANCH}"
+                                sh 'docker pull ahmedelmazon/bakehouse'
+                                sh 'kubectl apply -f deployment.yaml'
+                                sh 'kubectl apply -f service.yaml'
+
+                            }
+                   
+                 }
+            }        
         }
-*/
-   }
+    }
 }
