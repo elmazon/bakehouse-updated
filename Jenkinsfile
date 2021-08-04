@@ -4,9 +4,13 @@ pipeline{
         choice(name: 'BRANCH', choices: ['release', 'dev', 'test', 'prod'])
     } 
     stages{
+        stage('SCM'){
+            steps{
+                sh "git checkout ${params.BRANCH}"
+            }
+        }
         stage('new_stage') {
             steps {
-                 sh "git checkout ${params.BRANCH}"
                  script {
                     withCredentials([usernamePassword(credentialsId: 'docker_password', passwordVariable: 'password', usernameVariable: 'user')]) {
                         sh 'docker login -u ahmedelmazon -p ${password}'
