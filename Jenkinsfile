@@ -22,8 +22,9 @@ pipeline{
                     if (params.BRANCH == 'release'){
                         withCredentials(usernameColonPassword([credentialsId: 'docker-password', variable: 'docker-pass'])) {
                             sh "docker login -u ahmedelmazon -p ${docker-pass}"
+                            sh "docker build . -t ahmedelmazon/bakehouse"
                         }
-                        sh "docker build . -t ahmedelmazon/bakehouse"
+                        
                     }
                 }
             }
