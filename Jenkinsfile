@@ -31,7 +31,7 @@ pipeline{
                         }
                     else if  (params.BRANCH == 'dev') 
                         {
-                            checkout([$class: 'GitSCM', branches: [[name: '*/${params.BRANCH}']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/elmazon/bakehouse']]])
+                            checkout([$class: 'GitSCM', branches: [[name: '*/dev']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/elmazon/bakehouse']]])
                             sh 'docker pull ahmedelmazon/bakehouse'
                             sh 'kubectl apply -f deployment.yaml'
                             sh 'kubectl apply -f service.yaml'
