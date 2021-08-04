@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage('SCM'){
             steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/release']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/elmazon/bakehouse']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/release']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/elmazon/bakehouse-updated']]])
                 //sh "git checkout ${params.BRANCH}"
                 //checkout SCM
             }
