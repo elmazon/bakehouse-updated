@@ -18,7 +18,7 @@ pipeline{
                         sh 'docker login -u ahmedelmazon -p ${password}'
                     }           
                     if  (params.BRANCH == 'release'){
-                                checkout([$class: 'GitSCM', branches: [[name: '*/${params.BRANCH}']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/elmazon/bakehouse']]])
+                                checkout([$class: 'GitSCM', branches: [[name: '${params.BRANCH}']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/elmazon/bakehouse']]])
                                 sh 'docker build . -t ahmedelmazon/bakehouse'
                                 sh 'docker push ahmedelmazon/bakehouse'
                         }
