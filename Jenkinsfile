@@ -7,7 +7,7 @@ pipeline{
         stage('new_stage') {
             steps {
                  script {
-                    withCredentials(usernameColonPassword([credentialsId: 'docker-password', variable: 'docker-pass'])) {
+                    withCredentials(usernamePassword([credentialsId: 'docker-password', variable: 'docker-pass'])) {
                         sh 'docker login -u ahmedelmazon -p ${docker-pass}'       
                     }
                     if  (params.BRANCH == 'release') 
